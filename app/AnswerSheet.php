@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
 use App\Examination;
 use App\Question;
 
 class AnswerSheet extends Model
 {
+    protected $fillable = ['answers'];
+
 	protected $casts = [
         'answers' => 'array',
     ]; 
@@ -18,20 +21,26 @@ class AnswerSheet extends Model
     	return $this->belongsTo(Examination::class);
     }
 
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function calcScore()
     {
-    	$question_ids = $this->examination->questions;
-    	$questions = Question::whereIn('id', $question_ids);
+    	$questions = $this->examination->questions;
     	$right_count = 0;
-    	foreach ($this->answers as idx, myanswer)
+
+    	foreach ($this->answers as $qid => $myanswer)
     	{
-    		$right_answer = array_first($questions, function($value, $key) use($idx) {
-    			return $key == $idx; 
+    		$question = array_first($questions, function($question, $key) use($qid) {
+    			return $question->id == $qid; 
     		});
-    		if ($right_answer.answer == myanswer) {
-    			++right_count;
+
+    		if (!is_null($question) && $question->answer == $myanswer) {
+    			$right_count++;
     		}
     	}
-    	return 0;
+    	return $right_count;
     }   
 }

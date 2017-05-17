@@ -40,10 +40,15 @@ $factory->define(App\Question::class, function(Faker\Generator $faker) {
 
 
 $factory->define(App\Examination::class, function(Faker\Generator $faker) {
-	// $q1 = factory(App\Question::class)->make();
-	// $q2 = factory(App\Question::class)->make();
-	
 	return [
 		'name' => $faker->sentence,
+	];
+});
+
+
+$factory->define(App\AnswerSheet::class, function(Faker\Generator $faker) {
+	return [
+		'user_id' => 1,
+		'examination_id' => 1,
 	];
 });
