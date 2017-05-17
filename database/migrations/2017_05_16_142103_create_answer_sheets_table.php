@@ -16,6 +16,7 @@ class CreateAnswerSheetsTable extends Migration
         Schema::create('answer_sheets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('examination_id')->unsigned();
             $table->text('answers');
             $table->integer('score')->unsigned();
             $table->timestamps();

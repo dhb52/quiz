@@ -17,7 +17,7 @@ class QuestionTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testQuestion()
     {
         $this->assertTrue(true);
         $options = [
@@ -30,6 +30,8 @@ class QuestionTest extends TestCase
         	'options' => $options, 
         	'answer' => 'ab',
         	]);
+
+        $this->assertEquals(count($q1->options), 3);
         
     }
 }

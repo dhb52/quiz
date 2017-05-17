@@ -4,9 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Question;
+
 class Examination extends Model
 {
-    protected $casts = [
-        'questions' => 'array',
-    ];
+	protected $fillable = ['name'];
+
+	public function questions()
+	{
+		return $this->belongsToMany(Question::class, 'examination_question');
+	}
+
+    // protected $casts = [
+    //     'questions' => 'array',
+    // ];
 }
